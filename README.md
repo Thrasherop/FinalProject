@@ -26,4 +26,7 @@ root                    (project root folder)
 
 ## Authors
 ---
-[list author names and emails]
+* Jaden Day
+* Brigham Chen
+* Joshua Kopaunik
+* Ethan McRae
