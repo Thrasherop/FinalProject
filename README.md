@@ -1,5 +1,9 @@
-# [PROGRAM NAME] 
-[a description of the program]
+# Godzilla Flies
+
+You begin life as a lonely fly, trying to avoid being eaten by predators. However, once you eat
+some food, YOU become the predator. Your previous enemies will begin fleeing from your presence.
+Continue consuming to continue evolving, but make sure to watch the time limit!
+
 
 ## Getting Started
 ---
