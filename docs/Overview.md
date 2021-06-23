@@ -25,3 +25,44 @@ This game will have a number of python classes, all handling different aspects o
 * By July 3rd, we will have all features implemented in a beta
 * By July 10th, we will begin rolling out release candidates
 * Finally, by July 17th, we will have a stable release
+
+## HEIRARCHY
+
+* Poop, Breadcrumbs
+* Fly, Ant
+* Spider, Dragon Fly
+* Tweety Bird, Praying Mantis
+* Cat, Hawk, Electric Eel
+* Shark (rare), Wolf
+* Godzilla Fly
+
+## ABILITIES
+* Poop: Safety
+* Breadcrumbs: Speed
+* Fly: Speed
+* Ant: Time
+* Spider: Safety
+* Dragon Fly: Fire Breathing
+* Tweety Bird: Time
+* Praying Mantis: Speed
+* Cat: Time (adds 9?)
+* Hawk: Safety
+* Electric Eel: Makes you look cool, Force Field (Only a chance of getting force field)
+* Shark: Safety and Speed
+* Wolf: Speed
+* Godzilla Fly: All of the above
+
+* Speed: Breadcrumbs, Fly, Praying Mantis
+* Safety (slows enemies): Poop, Electric Eels, Spider
+* Time (Adds): Ant, Tweety Bird, Cat
+* Fire Breathing (Longer reach): Dragon Fly
+* Force Field: Eel
+
+## IDEAS
+* Once you get to Godzilla status, you have to eat enough to impress your mate so that you can breed.
+* Once you breed, you spawn as a fly again.
+
+* To attract the Godzilla mate, you have to go around and collect all of the abilities.
+* Show a progress bar of the abilities you've collected.
+
+* Create an Ability class
