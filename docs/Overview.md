@@ -58,6 +58,23 @@ This game will have a number of python classes, all handling different aspects o
 * Fire Breathing (Longer reach): Dragon Fly
 * Force Field: Eel
 
+## DRAWING ASSIGNMENTS
+* Poop: Ethan
+* Breadcrumbs: Josh
+* Fly: Ethan
+* Ant: Brigham
+* Spider: Ethan
+* Dragon Fly: Jaden
+* Tweety Bird: Josh
+* Praying Mantis: Jaden
+* Cat: Time Josh
+* Hawk: Brigham
+* Electric Eel: Josh
+* Shark: Ethan
+* Wolf: Brigham
+* Godzilla Fly: Jaden
+* 250px by 250px
+
 ## IDEAS
 * Once you get to Godzilla status, you have to eat enough to impress your mate so that you can breed.
 * Once you breed, you spawn as a fly again.
@@ -71,10 +88,11 @@ This game will have a number of python classes, all handling different aspects o
 
 0) Player Movement
 1) Enemy/food spawning
-2) Timer
-2) Score
-3) Enemy/food movement
-3) Death (Start/End)
+1) Interaction
+2) Enemy/food movement
+2) Death (Start/End)
+3) Timer
+3) Score
 4) Evolution (Sprites and Background)
 4) New Godzilla Fly (Difficulty Increase)
 4) Abilities
