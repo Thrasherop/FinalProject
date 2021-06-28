@@ -66,3 +66,15 @@ This game will have a number of python classes, all handling different aspects o
 * Show a progress bar of the abilities you've collected.
 
 * Create an Ability class
+
+## Priorities
+
+0) Player Movement
+1) Enemy/food spawning
+2) Timer
+2) Score
+3) Enemy/food movement
+3) Death (Start/End)
+4) Evolution (Sprites and Background)
+4) New Godzilla Fly (Difficulty Increase)
+4) Abilities
