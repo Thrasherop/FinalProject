@@ -102,20 +102,8 @@ class MyGame(arcade.Window):
         # Move the player with the physics engine
         self.physics_engine.update()
 
-        # See if we hit any coins
-        prey_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
-                                                             self.prey_list)
-
-        # Loop through each coin we hit (if any) and remove it
-        for prey in prey_hit_list:
-            # Remove the coin
-            prey.remove_from_sprite_lists()
-            # upgrade
-            self.level += 1
-            if self.level == 1 :
-                pass    
-            # Play a sound
-            #arcade.play_sound()
+        # See if we hit anything
+        
 
         # Adjust for boundary if needed
         # # Top
@@ -134,6 +122,24 @@ class MyGame(arcade.Window):
         elif self.player_sprite._get_right() > SCREEN_WIDTH - 1:
             self.player_sprite.change_x = 0
             self.player_sprite._set_right(SCREEN_WIDTH - 1)
+
+    def check_for_collisions(self):
+        prey_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
+                                                             self.prey_list)
+
+        # Loop through each coin we hit (if any) and remove it
+        for prey in prey_hit_list:
+            # Remove the coin
+            prey.remove_from_sprite_lists()
+            # upgrade
+            self.level += 1
+            if self.level == 1 :
+                pass    
+            # Play a sound
+            #arcade.play_sound()
+        
+
+        pass
 
 def main():
     """ Main method """
