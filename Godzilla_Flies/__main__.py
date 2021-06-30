@@ -28,6 +28,7 @@ class MyGame(arcade.Window):
         arcade.set_background_color((200, 200, 200))
 
         # Sprite libraries
+        self.level = 0
         self.prey_list = None
         self.predator_list = None
         self.player_list = None
@@ -49,19 +50,19 @@ class MyGame(arcade.Window):
         self.all_sprites.append(self.player_sprite)
 
         # Set up the prey
-        coordinate_list = [[512, 300], [256, 300], [786, 300]]
+        coordinate_list = [[512, 200], [256, 300], [786, 300]]
         for coordinate in coordinate_list:
-            predator = arcade.Sprite(POOP_IMAGE, SCALING)
-            predator.position = coordinate
-            self.predator_list.append(predator)
-            self.all_sprites.append(predator)
+            prey = arcade.Sprite(POOP_IMAGE, SCALING)
+            prey.position = coordinate
+            self.prey_list.append(prey)
+            #self.all_sprites.append(prey)
         # Set up the predator
         coordinate_list = [[512, 100], [256, 100], [786, 100]]
         for coordinate in coordinate_list:
             predator = arcade.Sprite(SPIDER_IMAGE, SCALING)
             predator.position = coordinate
             self.predator_list.append(predator)
-            self.all_sprites.append(predator)
+            #self.all_sprites.append(predator)
 
         # Physics engine
         self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
@@ -100,6 +101,21 @@ class MyGame(arcade.Window):
 
         # Move the player with the physics engine
         self.physics_engine.update()
+
+        # See if we hit any coins
+        prey_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
+                                                             self.prey_list)
+
+        # Loop through each coin we hit (if any) and remove it
+        for prey in prey_hit_list:
+            # Remove the coin
+            prey.remove_from_sprite_lists()
+            # upgrade
+            self.level += 1
+            if self.level == 1 :
+                pass    
+            # Play a sound
+            #arcade.play_sound()
 
         # Adjust for boundary if needed
         # # Top
