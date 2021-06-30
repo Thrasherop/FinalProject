@@ -9,6 +9,7 @@ MARGIN = 65
 SCALING = .25
 
 PLAYER_MOVEMENT_SPEED = 5
+ENEMY_MOVEMENT_SPEED = 2
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 FLY_IMAGE = os.path.join(PATH, '..', 'assets', 'fly.png')
