@@ -121,6 +121,9 @@ class MyGame(arcade.Window):
         self.physics_engine.update()
 
 
+        for predator in self.predator_list:
+            predator.update()
+
         # Moves predators
         for engine in self.predator_engines:
             engine.update()

@@ -18,8 +18,8 @@ class Predator(Creature):
         # self.change_y = randint(0, self.speed) * choice((-1, 1))
         # self.change_x = randint(0, self.speed - abs(self.change_y)) * choice((-1, 1))
 
-        self.change_y = 100
-        self.change_x = 100
+        self.change_y = 1
+        self.change_x = 1
 
         self.boundary_check()
 
