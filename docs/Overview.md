@@ -78,3 +78,4 @@ This game will have a number of python classes, all handling different aspects o
 4) Evolution (Sprites and Background)
 4) New Godzilla Fly (Difficulty Increase)
 4) Abilities
+4) Enemy Adrenaline Boost (when they see you)
