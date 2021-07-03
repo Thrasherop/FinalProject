@@ -2,8 +2,9 @@ from random import randint, choice
 from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 from game.creature import Creature
+import math
 
-from project_template.Godzilla_Flies.game.constants import ENEMY_MOVEMENT_SPEED, SCREEN_HEIGHT, SCREEN_WIDTH
+from game.constants import ENEMY_MOVEMENT_SPEED, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 class Prey(Creature):
@@ -13,9 +14,22 @@ class Prey(Creature):
         self.target = player
 
     def move(self):
-        self.change_y = randint(0, self.speed) * choice((-1, 1))
-        self.change_x = randint(0, self.speed - abs(self.change_y)) * choice((-1, 1))
+        # self.change_y = randint(0, self.speed) * choice((-1, 1))
+        # self.change_x = randint(0, self.speed - abs(self.change_y)) * choice((-1, 1))
+        dx = self.target._get_center_x() - self._get_center_x()
+        dy = self.target._get_center_y() - self._get_center_y()
 
+        #Get the hypotenuse
+        d = math.sqrt(dx*dx + dy*dy)
+
+        #Calculate the change to the enemy position
+        cx = self.speed * dx / d
+        cy = self.speed * dy / d
+        # Note that sqrt(cx*cx + cy*cy) == speed
+
+        # Update enemy position
+        self.change_x = -cx
+        self.change_y = -cy
         self.boundary_check()
 
     def boundary_check(self):
@@ -44,4 +58,7 @@ class Prey(Creature):
 
         player.consume()
         self.remove_from_sprite_lists()
+    
+    def get_points(self):
+        return self.point_value
 
