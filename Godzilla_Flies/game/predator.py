@@ -14,6 +14,16 @@ class Predator(Creature):
         super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)
         self.point_value = point_value
         self.target = player
+        self.spawn()
+
+    def spawn(self):
+        while True:
+            x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
+            x_diff = abs(self.center_x - x)
+            y_diff = abs(self.center_y - y)
+            if x_diff > PREDATOR_SPAWN_DISTANCE and y_diff > PREDATOR_SPAWN_DISTANCE:
+                break
+        self.position = [x, y]
 
     def move(self):
         # self.change_y = randint(0, self.speed) * choice((-1, 1))

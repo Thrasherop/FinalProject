@@ -4,14 +4,22 @@ from game.constants import *
 from game.creature import Creature
 import math
 
-from game.constants import ENEMY_MOVEMENT_SPEED, SCREEN_HEIGHT, SCREEN_WIDTH
-
 
 class Prey(Creature):
     def __init__(self, sprite, scaling, point_value, player):
         super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)
         self.point_value = point_value
         self.target = player
+        self.spawn()
+
+    def spawn(self):
+        while True:
+            x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
+            x_diff = abs(self.center_x - x)
+            y_diff = abs(self.center_y - y)
+            if x_diff > PREY_SPAWN_DISTANCE and y_diff > PREY_SPAWN_DISTANCE:
+                break
+        self.position = [x, y]
 
     def move(self):
         # self.change_y = randint(0, self.speed) * choice((-1, 1))
