@@ -1,23 +1,46 @@
 from random import randint
 
 from arcade.physics_engines import PhysicsEngineSimple
-from game.constants import *
-#from game.point import Point
-"""
-from game.control_actors_action import ControlActorsAction
-from game.draw_actors_action import DrawActorsAction
-from game.handle_collisions_action import HandleCollisionsAction
-from game.move_actors_action import MoveActorsAction
-from game.arcade_input_service import ArcadeInputService
-from game.arcade_output_service import ArcadeOutputService# program entry point
-"""
 
-from game.prey import Prey
-from game.creature import Creature
-from game.player import Player
-from game.predator import Predator
+try: 
+    from game.constants import *
+    #from game.point import Point
+    """
+    from game.control_actors_action import ControlActorsAction
+    from game.draw_actors_action import DrawActorsAction
+    from game.handle_collisions_action import HandleCollisionsAction
+    from game.move_actors_action import MoveActorsAction
+    from game.arcade_input_service import ArcadeInputService
+    from game.arcade_output_service import ArcadeOutputService# program entry point
+    """
 
-import arcade
+    from game.prey import Prey
+    from game.creature import Creature
+    from game.player import Player
+    from game.predator import Predator
+    from game.score import *
+
+    import arcade
+
+except:
+    from game.constants import *
+    #from game.point import Point
+    """
+    from game.control_actors_action import ControlActorsAction
+    from game.draw_actors_action import DrawActorsAction
+    from game.handle_collisions_action import HandleCollisionsAction
+    from game.move_actors_action import MoveActorsAction
+    from game.arcade_input_service import ArcadeInputService
+    from game.arcade_output_service import ArcadeOutputService# program entry point
+    """
+
+    from game.prey import Prey
+    from game.creature import Creature
+    from game.player import Player
+    from game.predator import Predator
+    from game.score import *
+
+    import arcade
 
 class MyGame(arcade.Window):
     """
@@ -46,6 +69,9 @@ class MyGame(arcade.Window):
         self.player_list = arcade.SpriteList()
         self.prey_list = arcade.SpriteList(use_spatial_hash=True)
         self.predator_list = arcade.SpriteList(use_spatial_hash=True)
+
+        # Initialize the score class
+        self.score = Score()
 
         # Set up the player
         self.player_sprite = Player(FLY_IMAGE)
@@ -83,6 +109,12 @@ class MyGame(arcade.Window):
 
             self.predator_engines.append(PhysicsEngineSimple(predator, self.all_sprites))
 
+        self.prey_engines = []
+
+        for prey in self.prey_list:
+
+            self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
+
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
         if key == arcade.key.UP or key == arcade.key.W:
@@ -111,24 +143,24 @@ class MyGame(arcade.Window):
         self.prey_list.draw()
         self.predator_list.draw()
         self.player_list.draw()
+        arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
 
     def on_update(self, delta_time):
         """Movement and gane logic"""
 
 
-
         # Move the player with the physics engine
         self.physics_engine.update()
-
-
-        for predator in self.predator_list:
-            predator.update()
 
         # Moves predators
         for engine in self.predator_engines:
             engine.update()
+        for predator in self.predator_list:
+            predator.update()
 
         # Moves prey
+        for engine in self.prey_engines:
+            engine.update()
         for prey in self.prey_list:
             prey.update()
 
@@ -170,6 +202,8 @@ class MyGame(arcade.Window):
             # Remove the coin
             # prey.remove_from_sprite_lists()
             self.player_sprite.consume(prey)
+            self.score.add_score(prey.get_points())
+            print(self.score.get_score())
 
             # upgrade
             self.level += 1

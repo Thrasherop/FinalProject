@@ -3,9 +3,10 @@ from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 from game.creature import Creature
 from game.player import Player
+import math
 
 
-from project_template.Godzilla_Flies.game.constants import *
+from game.constants import *
 
 
 class Predator(Creature):
@@ -17,9 +18,21 @@ class Predator(Creature):
     def move(self):
         # self.change_y = randint(0, self.speed) * choice((-1, 1))
         # self.change_x = randint(0, self.speed - abs(self.change_y)) * choice((-1, 1))
+        dx = self.target._get_center_x() - self._get_center_x()
+        dy = self.target._get_center_y() - self._get_center_y()
 
-        self.change_y = 1
-        self.change_x = 1
+        #Get the hypotenuse
+        d = math.sqrt(dx*dx + dy*dy)
+
+        #Calculate the change to the enemy position
+        cx = self.speed * dx / d
+        cy = self.speed * dy / d
+        # Note that sqrt(cx*cx + cy*cy) == speed
+
+        # Update enemy position
+        self.change_x = cx
+        self.change_y = cy
+
 
         self.boundary_check()
 
