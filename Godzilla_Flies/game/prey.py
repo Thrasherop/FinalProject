@@ -6,6 +6,7 @@ import math
 from time import time
 
 
+
 class Prey(Creature):
     def __init__(self, sprite, scaling, point_value, player):
         super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)

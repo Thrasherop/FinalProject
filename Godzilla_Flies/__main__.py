@@ -20,6 +20,7 @@ try:
     from game.predator import Predator
     from game.score import *
 
+
     import arcade
 
 except:
@@ -115,13 +116,13 @@ class MyGame(arcade.Window):
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
         if key == arcade.key.UP or key == arcade.key.W:
-            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_y = self.player_sprite.speed
         elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_y = -self.player_sprite.speed
         elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_x = -self.player_sprite.speed
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_x = self.player_sprite.speed
         elif key == arcade.key.ESCAPE:
             self.close()
 
@@ -192,7 +193,8 @@ class MyGame(arcade.Window):
         predator_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.predator_list)
 
         if len(predator_hit_list) > 0:
-           self.player_lost()
+            if self.player_sprite.force_field == False :
+                self.player_lost()
 
         # Loop through each coin we hit (if any) and remove it
         for prey in prey_hit_list:
