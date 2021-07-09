@@ -36,7 +36,7 @@ class Creature(arcade.Sprite):
             self._set_right(SCREEN_WIDTH - 1)
 
     def _wander(self):
-        """Randomly wanders the character around. Every time interval the creature switches from moving to pausing."""
+        """Randomly wanders the character around. Every time interval the creature switches from moving to pausing"""
         if time() - self._last_change > 3:
             self._last_change = time()
 
