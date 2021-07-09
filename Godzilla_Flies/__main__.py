@@ -66,6 +66,11 @@ class MyGame(arcade.Window):
         # Player
         self.player_list = None
         self.player_sprite = None
+
+        #UI
+        self.ui_list = arcade.SpriteList()
+        self.is_over = False
+
         # Other
         self.all_sprites = arcade.SpriteList(use_spatial_hash=True)
         self.level = 0
@@ -139,16 +144,20 @@ class MyGame(arcade.Window):
 
     def on_draw(self):
         """ Render the screen. """
-        arcade.start_render()
+        if True: #not self.is_over:
+            arcade.start_render()
 
-        # Sprites
-        self.prey_list.draw()
-        self.predator_list.draw()
-        self.player_list.draw()
-        arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+            # Sprites
+            self.prey_list.draw()
+            self.predator_list.draw()
+            self.player_list.draw()
+            arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+
+        self.ui_list.draw()
 
     def on_update(self, delta_time):
         """Movement and game logic"""
+
 
 
         # Move the player with the physics engine
@@ -221,13 +230,25 @@ class MyGame(arcade.Window):
             self.evolve()
             self.evolve_status = 0
 
-
-
     def player_lost(self):
         # TODO Finish this
         self.player_sprite.remove_from_sprite_lists()
         self.score = Score()
-        self.spawn_player()
+        #self.spawn_player() Don't respawn player
+
+        print(self.is_over)
+
+        if not self.is_over:
+            loss_sprite = arcade.Sprite(DEATH_IMAGE, DEATH_SCALING)
+            loss_sprite.center_x = SCREEN_WIDTH / 2
+            loss_sprite.center_y = SCREEN_HEIGHT / 2
+            self.ui_list.append(loss_sprite)
+            self.is_over = True
+
+
+
+            print("inside")
+
 
         for predator in self.predator_list:
             predator.target = self.player_sprite

@@ -11,7 +11,7 @@ from game.constants import *
 
 
 class Predator(Creature):
-    def __init__(self, sprite, scaling, point_value, player):
+    def __init__(self, sprite, scaling, point_value, player, ):
 
         self.sprite_list = ["./assets/spider.png", './assets/tweety_bird.png', './assets/cat.png',
                              './assets/shark.png', './assets/godzilla_fly.png']
@@ -32,6 +32,8 @@ class Predator(Creature):
         self.sprite_index = 0
 
     def spawn(self):
+
+
         while True:
             x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
             x_diff = abs(self.center_x - x)
