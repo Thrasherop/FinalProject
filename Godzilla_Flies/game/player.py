@@ -2,7 +2,7 @@ from random import randint
 from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 from game.creature import Creature
-from game.ability import Ability
+#from game.ability import Ability
 
 from game.constants import *
 
