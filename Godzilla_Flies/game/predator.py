@@ -19,7 +19,7 @@ class Predator(Creature):
 
         self.cur_sprite = self.sprite_list[0]
 
-        super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)
+        super().__init__(self.cur_sprite, scaling, ENEMY_MOVEMENT_SPEED)
 
 
         self.point_value = point_value

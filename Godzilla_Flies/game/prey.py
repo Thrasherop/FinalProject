@@ -7,14 +7,14 @@ import arcade
 
 
 class Prey(Creature):
-    def __init__(self, sprite, scaling, point_value, player):
+    def __init__(self, sprite, scaling, point_value, player, cur_evolution):
 
         self.sprite_list = ['./assets/poop.png', './assets/fly.png', "./assets/spider.png", './assets/tweety_bird.png', './assets/cat.png',
                             './assets/shark.png', './assets/godzilla_fly.png']
 
-        self.cur_sprite = self.sprite_list[0]
+        self.cur_sprite = self.sprite_list[cur_evolution]
 
-        super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)
+        super().__init__(self.cur_sprite, scaling, ENEMY_MOVEMENT_SPEED)
         self.point_value = point_value
         self.target = player
         self.spawn()
@@ -22,7 +22,7 @@ class Prey(Creature):
         for item in self.sprite_list:
             self.append_texture(arcade.load_texture(item))
 
-        self.sprite_index = 0
+        self.sprite_index = cur_evolution
 
     def spawn(self):
         while True:

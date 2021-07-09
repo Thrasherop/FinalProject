@@ -71,6 +71,8 @@ class MyGame(arcade.Window):
         self.level = 0
         self.evolve_status = 0
 
+        self.cur_evolution = 0
+
 
     def spawn_player(self):
         self.player_sprite = Player(FLY_IMAGE)
@@ -81,7 +83,7 @@ class MyGame(arcade.Window):
         self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
 
     def spawn_prey(self):
-        prey = Prey(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite)
+        prey = Prey(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite, self.cur_evolution)
         self.prey_list.append(prey)
         self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
 
@@ -114,7 +116,6 @@ class MyGame(arcade.Window):
         # Set up the predator
         for i in range(NUMBER_OF_PRADATORS):
             self.spawn_predator()
-            
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
@@ -230,8 +231,10 @@ class MyGame(arcade.Window):
 
         for predator in self.predator_list:
             predator.target = self.player_sprite
+
         for prey in self.prey_list:
             prey.target = self.player_sprite
+
         print("Player has perished")
 
         pass
@@ -248,6 +251,8 @@ class MyGame(arcade.Window):
 
         for thing in self.player_list:
             thing.evolve()
+
+        self.cur_evolution += 1
 
         pass
 
