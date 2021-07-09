@@ -23,6 +23,8 @@ try:
     import arcade
 
 except:
+
+
     from game.constants import *
     #from game.point import Point
     """
@@ -67,6 +69,8 @@ class MyGame(arcade.Window):
         # Other
         self.all_sprites = arcade.SpriteList(use_spatial_hash=True)
         self.level = 0
+        self.evolve_status = 0
+
 
     def spawn_player(self):
         self.player_sprite = Player(FLY_IMAGE)
@@ -201,7 +205,8 @@ class MyGame(arcade.Window):
             self.player_sprite.consume(prey)
             self.spawn_prey()
             self.score.add_score(prey.get_points())
-            print(self.score.get_score())
+            self.evolve_status += 1
+            #print(self.score.get_score())
 
             # upgrade
             self.level += 1
@@ -210,6 +215,12 @@ class MyGame(arcade.Window):
                 pass    
             # Play a sound
             #arcade.play_sound()
+
+        if self.evolve_status >= 5:
+            self.evolve()
+            self.evolve_status = 0
+
+
 
     def player_lost(self):
         # TODO Finish this
@@ -222,6 +233,21 @@ class MyGame(arcade.Window):
         for prey in self.prey_list:
             prey.target = self.player_sprite
         print("Player has perished")
+
+        pass
+
+    def evolve(self):
+
+        print("\n\n\n Evolving")
+
+        for thing in self.prey_list:
+            thing.evolve()
+
+        for thing in self.predator_list:
+            thing.evolve()
+
+        for thing in self.player_list:
+            thing.evolve()
 
         pass
 

@@ -3,14 +3,26 @@ from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 from game.creature import Creature
 import math
+import arcade
 
 
 class Prey(Creature):
     def __init__(self, sprite, scaling, point_value, player):
+
+        self.sprite_list = ['./assets/poop.png', './assets/fly.png', "./assets/spider.png", './assets/tweety_bird.png', './assets/cat.png',
+                            './assets/shark.png', './assets/godzilla_fly.png']
+
+        self.cur_sprite = self.sprite_list[0]
+
         super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)
         self.point_value = point_value
         self.target = player
         self.spawn()
+
+        for item in self.sprite_list:
+            self.append_texture(arcade.load_texture(item))
+
+        self.sprite_index = 0
 
     def spawn(self):
         while True:
@@ -69,4 +81,19 @@ class Prey(Creature):
     
     def get_points(self):
         return self.point_value
+
+
+    def evolve(self):
+
+        print("Player is evolving!")
+
+        self.sprite_index += 1
+
+        self.cur_sprite = self.sprite_list[self.sprite_index]
+
+        self.set_texture(self.sprite_index + 1)
+
+        self.changed = True
+
+        pass
 
