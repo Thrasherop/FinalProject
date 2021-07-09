@@ -5,7 +5,7 @@ from game.creature import Creature
 from game.player import Player
 
 
-from project_template.Godzilla_Flies.game.constants import *
+from game.constants import *
 
 
 class Predator(Creature):

@@ -2,7 +2,7 @@ import os
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 650
-SCREEN_TITLE = "Platformer"
+SCREEN_TITLE = "Godzilla Flies"
 
 MARGIN = 65
 

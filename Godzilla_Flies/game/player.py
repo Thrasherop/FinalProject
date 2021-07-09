@@ -3,7 +3,7 @@ from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 from game.creature import Creature
 
-from project_template.Godzilla_Flies.game.constants import *
+from game.constants import *
 
 
 class Player(Creature):
