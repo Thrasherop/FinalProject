@@ -1,23 +1,46 @@
 from random import randint
 
 from arcade.physics_engines import PhysicsEngineSimple
-from game.constants import *
-#from game.point import Point
-"""
-from game.control_actors_action import ControlActorsAction
-from game.draw_actors_action import DrawActorsAction
-from game.handle_collisions_action import HandleCollisionsAction
-from game.move_actors_action import MoveActorsAction
-from game.arcade_input_service import ArcadeInputService
-from game.arcade_output_service import ArcadeOutputService# program entry point
-"""
 
-from game.prey import Prey
-from game.creature import Creature
-from game.player import Player
-from game.predator import Predator
+try: 
+    from game.constants import *
+    #from game.point import Point
+    """
+    from game.control_actors_action import ControlActorsAction
+    from game.draw_actors_action import DrawActorsAction
+    from game.handle_collisions_action import HandleCollisionsAction
+    from game.move_actors_action import MoveActorsAction
+    from game.arcade_input_service import ArcadeInputService
+    from game.arcade_output_service import ArcadeOutputService# program entry point
+    """
 
-import arcade
+    from game.prey import Prey
+    from game.creature import Creature
+    from game.player import Player
+    from game.predator import Predator
+    from game.score import *
+
+    import arcade
+
+except:
+    from game.constants import *
+    #from game.point import Point
+    """
+    from game.control_actors_action import ControlActorsAction
+    from game.draw_actors_action import DrawActorsAction
+    from game.handle_collisions_action import HandleCollisionsAction
+    from game.move_actors_action import MoveActorsAction
+    from game.arcade_input_service import ArcadeInputService
+    from game.arcade_output_service import ArcadeOutputService# program entry point
+    """
+
+    from game.prey import Prey
+    from game.creature import Creature
+    from game.player import Player
+    from game.predator import Predator
+    from game.score import *
+
+    import arcade
 
 class MyGame(arcade.Window):
     """
@@ -31,14 +54,38 @@ class MyGame(arcade.Window):
 
         # Pick background color
         arcade.set_background_color((200, 200, 200))
-
-        # Sprite libraries
-        self.level = 0
+        
+        # Prey
         self.prey_list = None
+        self.prey_engines = []
+        # Predators
         self.predator_list = None
+        self.predator_engines = []
+        # Player
         self.player_list = None
         self.player_sprite = None
+        # Other
         self.all_sprites = arcade.SpriteList(use_spatial_hash=True)
+        self.level = 0
+
+    def spawn_player(self):
+        self.player_sprite = Player(FLY_IMAGE)
+        self.player_sprite.center_x = SCREEN_WIDTH/2
+        self.player_sprite.center_y = SCREEN_HEIGHT/2
+        self.player_list.append(self.player_sprite)
+
+        self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
+
+    def spawn_prey(self):
+        prey = Prey(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite)
+        self.prey_list.append(prey)
+        self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
+
+    def spawn_predator(self):
+        predator = Predator(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite)
+        self.predator_list.append(predator)
+        self.predator_engines.append(PhysicsEngineSimple(predator, self.all_sprites))
+
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game. """
@@ -47,41 +94,23 @@ class MyGame(arcade.Window):
         self.prey_list = arcade.SpriteList(use_spatial_hash=True)
         self.predator_list = arcade.SpriteList(use_spatial_hash=True)
 
+        # Initialize the score class
+        self.score = Score()
+
         # Set up the player
-        self.player_sprite = Player(FLY_IMAGE)
-        self.player_sprite.center_x = SCREEN_WIDTH/2
-        self.player_sprite.center_y = SCREEN_HEIGHT/2
-        self.player_list.append(self.player_sprite)
+        self.spawn_player()
 
 
         # self.all_sprites.append(self.player_sprite)
         # self.all_sprites.append(self.predator_list)
 
         # Set up the prey
-        coordinate_list = [[512, 200], [256, 300], [786, 300]]
-        for coordinate in coordinate_list:
-            # prey = arcade.Sprite(POOP_IMAGE, SCALING)
-            prey = Prey(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite)
-            prey.position = coordinate
-            self.prey_list.append(prey)
-            # self.all_sprites.append(prey)
+        for i in range(NUMBER_OF_PREY):
+            self.spawn_prey()
         # Set up the predator
-        coordinate_list = [[512, 100], [256, 100], [786, 100]]
-        for coordinate in coordinate_list:
-            # predator = arcade.Sprite(SPIDER_IMAGE, PREDATOR_SCALING)
-            predator = Predator(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite)
-            predator.position = coordinate
-            self.predator_list.append(predator)
-            # self.all_sprites.append(predator)
-
-        # Physics engine for player
-        self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
-
-        self.predator_engines = []
-
-        for predator in self.predator_list:
-
-            self.predator_engines.append(PhysicsEngineSimple(predator, self.all_sprites))
+        for i in range(NUMBER_OF_PRADATORS):
+            self.spawn_predator()
+            
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
@@ -111,24 +140,24 @@ class MyGame(arcade.Window):
         self.prey_list.draw()
         self.predator_list.draw()
         self.player_list.draw()
+        arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
 
     def on_update(self, delta_time):
-        """Movement and gane logic"""
-
+        """Movement and game logic"""
 
 
         # Move the player with the physics engine
         self.physics_engine.update()
 
-
-        for predator in self.predator_list:
-            predator.update()
-
         # Moves predators
         for engine in self.predator_engines:
             engine.update()
+        for predator in self.predator_list:
+            predator.update()
 
         # Moves prey
+        for engine in self.prey_engines:
+            engine.update()
         for prey in self.prey_list:
             prey.update()
 
@@ -170,6 +199,9 @@ class MyGame(arcade.Window):
             # Remove the coin
             # prey.remove_from_sprite_lists()
             self.player_sprite.consume(prey)
+            self.spawn_prey()
+            self.score.add_score(prey.get_points())
+            print(self.score.get_score())
 
             # upgrade
             self.level += 1
@@ -182,6 +214,13 @@ class MyGame(arcade.Window):
     def player_lost(self):
         # TODO Finish this
         self.player_sprite.remove_from_sprite_lists()
+        self.score = Score()
+        self.spawn_player()
+
+        for predator in self.predator_list:
+            predator.target = self.player_sprite
+        for prey in self.prey_list:
+            prey.target = self.player_sprite
         print("Player has perished")
 
         pass

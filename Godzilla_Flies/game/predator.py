@@ -3,9 +3,14 @@ from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 from game.creature import Creature
 from game.player import Player
+<<<<<<< HEAD
 
 
 from game.constants import *
+=======
+import math
+from time import time
+>>>>>>> feee3cc871a288b3995bddf3d691b66ed64762fc
 
 
 class Predator(Creature):
@@ -13,37 +18,34 @@ class Predator(Creature):
         super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)
         self.point_value = point_value
         self.target = player
+        self.spawn()
+
+    def spawn(self):
+        while True:
+            x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
+            x_diff = abs(self.center_x - x)
+            y_diff = abs(self.center_y - y)
+            if x_diff > PREDATOR_SPAWN_DISTANCE and y_diff > PREDATOR_SPAWN_DISTANCE:
+                break
+        self.position = [x, y]
 
     def move(self):
-        # self.change_y = randint(0, self.speed) * choice((-1, 1))
-        # self.change_x = randint(0, self.speed - abs(self.change_y)) * choice((-1, 1))
+        # Get the distance to the player
+        dx = self.target._get_center_x() - self._get_center_x()
+        dy = self.target._get_center_y() - self._get_center_y()
+        distance = math.sqrt(dx*dx + dy*dy)
 
-        self.change_y = 1
-        self.change_x = 1
+        # Player is in range: attack
+        if distance < KILL_RANGE:
+            self._chase_player()
+        # Player is out of range: wander
+        else:
+            self._wander()
+
 
         self.boundary_check()
 
-    def boundary_check(self):
-        # Adjust for boundary if needed
-        # # Top
-        if self._get_top() > SCREEN_HEIGHT - 1:
-            self.change_y = 0
-            self._set_top(SCREEN_HEIGHT - 1)
-        # # Bottom
-        elif self._get_bottom() < 0:
-            self.change_y = 0
-            self._set_bottom(0)
-        # # Left
-        if self._get_left() < 0:
-            self.change_x = 0
-            self._set_left(0)
-        # # Right
-        elif self._get_right() > SCREEN_WIDTH - 1:
-            self.change_x = 0
-            self._set_right(SCREEN_WIDTH - 1)
-
     def update(self):
-        self._go_to_player(self.target)
         self.move()
 
 
@@ -52,9 +54,23 @@ class Predator(Creature):
         if isinstance(other, Player):
             other.remove_from_sprite_lists()
 
-    def _go_to_player(self, player):
+    def _chase_player(self):
+        dx = self.target._get_center_x() - self._get_center_x()
+        dy = self.target._get_center_y() - self._get_center_y()
 
-        print(player.get_location())
+        # a^2 + b^2 = c^2
+        d = math.sqrt(dx*dx + dy*dy)
 
+        # Calculate change for my position
+        cx = self.speed * dx / d
+        cy = self.speed * dy / d
+
+        # Update my position
+        self.change_x = cx
+        self.change_y = cy
+
+        # Update movement variables
+        self._last_change = time()
+        self._auto = True
 
 
