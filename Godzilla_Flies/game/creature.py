@@ -2,7 +2,11 @@ from random import randint, choice
 from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 import arcade
+
+from abc import ABC, abstractmethod
+
 from time import time
+
 
 
 
@@ -12,6 +16,15 @@ class Creature(arcade.Sprite):
         
         # Movement variables
         self.speed = speed
+
+        #sself.sprite_list = []
+        self.evolution_index = 0
+
+
+    @abstractmethod
+    def evolve(self):
+        pass
+
         self._last_change = time()
         self._auto = False
 
@@ -69,5 +82,6 @@ class Creature(arcade.Sprite):
         
         #print(time() - self._last_change)
             
+
 
 

@@ -3,24 +3,42 @@ from arcade.physics_engines import PhysicsEngineSimple
 from game.constants import *
 from game.creature import Creature
 from game.player import Player
-<<<<<<< HEAD
+
+import math
+import arcade
 
 
 from game.constants import *
-=======
+
 import math
 from time import time
->>>>>>> feee3cc871a288b3995bddf3d691b66ed64762fc
+
 
 
 class Predator(Creature):
-    def __init__(self, sprite, scaling, point_value, player):
-        super().__init__(sprite, scaling, ENEMY_MOVEMENT_SPEED)
+    def __init__(self, sprite, scaling, point_value, player, ):
+
+        self.sprite_list = ["./assets/spider.png", './assets/tweety_bird.png', './assets/cat.png',
+                             './assets/shark.png', './assets/godzilla_fly.png']
+
+
+        self.cur_sprite = self.sprite_list[0]
+
+        super().__init__(self.cur_sprite, scaling, ENEMY_MOVEMENT_SPEED)
+
+
         self.point_value = point_value
         self.target = player
         self.spawn()
 
+        for item in self.sprite_list:
+            self.append_texture(arcade.load_texture(item))
+
+        self.sprite_index = 0
+
     def spawn(self):
+
+
         while True:
             x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
             x_diff = abs(self.center_x - x)
@@ -72,5 +90,25 @@ class Predator(Creature):
         # Update movement variables
         self._last_change = time()
         self._auto = True
+        
+        
+
+        #print(player.get_location())
+        pass
+
+    def evolve(self):
+
+        print("Predator is evolving!")
+
+        self.sprite_index += 1
+
+        self.cur_sprite = self.sprite_list[self.sprite_index]
+
+        self.set_texture(self.sprite_index + 1)
+
+        self.changed = True
+
+        pass
+
 
 

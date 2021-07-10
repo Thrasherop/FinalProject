@@ -23,6 +23,8 @@ try:
     import arcade
 
 except:
+
+
     from game.constants import *
     #from game.point import Point
     """
@@ -64,9 +66,18 @@ class MyGame(arcade.Window):
         # Player
         self.player_list = None
         self.player_sprite = None
+
+        #UI
+        self.ui_list = arcade.SpriteList()
+        self.is_over = False
+
         # Other
         self.all_sprites = arcade.SpriteList(use_spatial_hash=True)
         self.level = 0
+        self.evolve_status = 0
+
+        self.cur_evolution = 0
+
 
     def spawn_player(self):
         self.player_sprite = Player(FLY_IMAGE)
@@ -77,7 +88,7 @@ class MyGame(arcade.Window):
         self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
 
     def spawn_prey(self):
-        prey = Prey(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite)
+        prey = Prey(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite, self.cur_evolution)
         self.prey_list.append(prey)
         self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
 
@@ -114,7 +125,6 @@ class MyGame(arcade.Window):
         # Set up the predator
         for i in range(NUMBER_OF_PRADATORS):
             self.spawn_predator()
-            
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
@@ -138,7 +148,17 @@ class MyGame(arcade.Window):
 
     def on_draw(self):
         """ Render the screen. """
-        arcade.start_render()
+        if True: #not self.is_over:
+            arcade.start_render()
+
+            # Sprites
+            self.prey_list.draw()
+            self.predator_list.draw()
+            self.player_list.draw()
+            arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+
+
+        self.ui_list.draw()
 
         # Sprites
         self.prey_list.draw()
@@ -147,8 +167,10 @@ class MyGame(arcade.Window):
         arcade.draw_text(str(f"Score:  {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
         arcade.draw_text(str(f"Seconds: {self.timer.get_time()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
 
+
     def on_update(self, delta_time):
         """Movement and game logic"""
+
 
 
         # Move the player with the physics engine
@@ -208,7 +230,8 @@ class MyGame(arcade.Window):
             self.player_sprite.consume(prey)
             self.spawn_prey()
             self.score.add_score(prey.get_points())
-            print(self.score.get_score())
+            self.evolve_status += 1
+            #print(self.score.get_score())
 
             # upgrade
             self.level += 1
@@ -218,17 +241,54 @@ class MyGame(arcade.Window):
             # Play a sound
             #arcade.play_sound()
 
+        if self.evolve_status >= 5:
+            self.evolve()
+            self.evolve_status = 0
+
     def player_lost(self):
         # TODO Finish this
         self.player_sprite.remove_from_sprite_lists()
         self.score = Score()
-        self.spawn_player()
+        #self.spawn_player() Don't respawn player
+
+        print(self.is_over)
+
+        if not self.is_over:
+            loss_sprite = arcade.Sprite(DEATH_IMAGE, DEATH_SCALING)
+            loss_sprite.center_x = SCREEN_WIDTH / 2
+            loss_sprite.center_y = SCREEN_HEIGHT / 2
+            self.ui_list.append(loss_sprite)
+            self.is_over = True
+
+
+
+            print("inside")
+
 
         for predator in self.predator_list:
             predator.target = self.player_sprite
+
         for prey in self.prey_list:
             prey.target = self.player_sprite
+
         print("Player has perished")
+
+        pass
+
+    def evolve(self):
+
+        print("\n\n\n Evolving")
+
+        for thing in self.prey_list:
+            thing.evolve()
+
+        for thing in self.predator_list:
+            thing.evolve()
+
+        for thing in self.player_list:
+            thing.evolve()
+
+        self.cur_evolution += 1
 
         pass
 
