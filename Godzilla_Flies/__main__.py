@@ -71,6 +71,13 @@ class MyGame(arcade.Window):
         self.all_sprites = arcade.SpriteList(use_spatial_hash=True)
         self.level = 0
 
+        # UI
+        self.ui_list = arcade.SpriteList()
+        self.is_over = False
+
+        # Evolve
+        self.evolve_status = 0
+
     def spawn_player(self):
         self.player_sprite = Player(FLY_IMAGE)
         self.player_sprite.center_x = SCREEN_WIDTH/2
@@ -136,14 +143,27 @@ class MyGame(arcade.Window):
             self.player_sprite.change_x = 0
 
     def on_draw(self):
-        """ Render the screen. """
-        arcade.start_render()
+        if True:  # not self.is_over:
+            arcade.start_render()
+
+            # Sprites
+            self.prey_list.draw()
+            self.predator_list.draw()
+            self.player_list.draw()
+            arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12,
+                             anchor_x="right", anchor_y="top")
+
+        self.ui_list.draw()
 
         # Sprites
         self.prey_list.draw()
         self.predator_list.draw()
         self.player_list.draw()
-        arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+        arcade.draw_text(str(f"Score:  {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25,
+                         arcade.color.BLACK, 12, anchor_x="right", anchor_y="top")
+        # arcade.draw_text(str(f"Seconds: {self.timer.get_time()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40,
+        #                  arcade.color.BLACK, 12, anchor_x="right", anchor_y="top")
+
 
     def on_update(self, delta_time):
         """Movement and game logic"""
@@ -168,6 +188,9 @@ class MyGame(arcade.Window):
 
         # See if we hit anything
         self.check_for_collisions()
+
+        if self.evolve_status >= 5:
+            self.evolve()
         
 
         # Adjust for boundary if needed
@@ -207,6 +230,8 @@ class MyGame(arcade.Window):
             self.score.add_score(prey.get_points())
             print(self.score.get_score())
 
+            self.evolve_status += 1
+
             # upgrade
             self.level += 1
 
@@ -219,19 +244,43 @@ class MyGame(arcade.Window):
         # TODO Finish this
         self.player_sprite.remove_from_sprite_lists()
         self.score = Score()
-        self.spawn_player()
+        # self.spawn_player() Don't respawn player
+
+        print(self.is_over)
+
+        if not self.is_over:
+            loss_sprite = arcade.Sprite(DEATH_IMAGE, DEATH_SCALING)
+            loss_sprite.center_x = SCREEN_WIDTH / 2
+            loss_sprite.center_y = SCREEN_HEIGHT / 2
+            self.ui_list.append(loss_sprite)
+            self.is_over = True
+
+            print("inside")
 
         for predator in self.predator_list:
             predator.target = self.player_sprite
+
         for prey in self.prey_list:
             prey.target = self.player_sprite
+
         print("Player has perished")
 
         pass
 
+    def evolve(self):
 
+        print("__main__ evolving!!")
 
+        for thing in self.predator_list:
+            thing.evolve()
 
+        for thing in self.prey_list:
+            thing.evolve()
+
+        for thing in self.player_list:
+            thing.evolve()
+
+        self.evolve_status = 0
 
 def main():
     """ Main method """

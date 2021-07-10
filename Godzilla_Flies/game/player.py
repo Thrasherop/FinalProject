@@ -27,6 +27,8 @@ class Player(Creature):
 
         self.sprite_index = 0
 
+        self.force_field = False
+
 
 
 
