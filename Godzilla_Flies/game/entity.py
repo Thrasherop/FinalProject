@@ -32,6 +32,8 @@ class Entity(Creature):
 
             self.sprite_index = 0
 
+            self._update_interval = 3
+
         else:
             self.sprite_list = ['./assets/poop.png', './assets/fly.png', "./assets/spider.png",
                                 './assets/tweety_bird.png', './assets/cat.png',
@@ -51,6 +53,8 @@ class Entity(Creature):
 
             self.sprite_index = cur_evolution
 
+            self._update_interval = 1.5
+
     def spawn(self):
         while True:
             x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
@@ -58,7 +62,8 @@ class Entity(Creature):
             y_diff = abs(self.center_y - y)
             if x_diff > PREDATOR_SPAWN_DISTANCE and y_diff > PREDATOR_SPAWN_DISTANCE:
                 break
-        self.position = [x, y]
+        self.center_x = x
+        self.center_y = y
 
     def move(self):
         # Get the distance to the player
@@ -66,8 +71,12 @@ class Entity(Creature):
         dy = self.target._get_center_y() - self._get_center_y()
         distance = math.sqrt(dx*dx + dy*dy)
 
+        if self.type == PREDATOR: run_range = PREDATOR_KILL_RANGE
+        else: run_range = PREY_KILL_RANGE
+
         # Player is in range: attack
-        if distance < KILL_RANGE:
+        if distance < run_range:
+            self._last_update = time()
             if self.type == PREDATOR: #predator
                 self._chase_player()
 
@@ -76,8 +85,7 @@ class Entity(Creature):
 
         # Player is out of range: wander
         else:
-            #self._wander()
-            pass
+            self._wander()
 
 
         self.boundary_check()

@@ -3,47 +3,16 @@ from random import randint
 
 from arcade.physics_engines import PhysicsEngineSimple
 
-try: 
-    from game.constants import *
-    #from game.point import Point
-    """
-    from game.control_actors_action import ControlActorsAction
-    from game.draw_actors_action import DrawActorsAction
-    from game.handle_collisions_action import HandleCollisionsAction
-    from game.move_actors_action import MoveActorsAction
-    from game.arcade_input_service import ArcadeInputService
-    from game.arcade_output_service import ArcadeOutputService# program entry point
-    """
-    from game.predator import Predator
-    from game.prey import Prey
-    from game.creature import Creature
-    from game.player import Player
-    from game.entity import Entity
-    from game.score import *
+from game.constants import *
 
+from game.prey import Prey
+from game.creature import Creature
+from game.player import Player
+from game.predator import Predator
+from game.entity import Entity
+from game.score import *
 
-    import arcade
-
-except:
-    from game.constants import *
-    #from game.point import Point
-    """
-    from game.control_actors_action import ControlActorsAction
-    from game.draw_actors_action import DrawActorsAction
-    from game.handle_collisions_action import HandleCollisionsAction
-    from game.move_actors_action import MoveActorsAction
-    from game.arcade_input_service import ArcadeInputService
-    from game.arcade_output_service import ArcadeOutputService# program entry point
-    """
-
-    from game.prey import Prey
-    from game.creature import Creature
-    from game.player import Player
-    from game.predator import Predator
-    from game.entity import Entity
-    from game.score import *
-
-    import arcade
+import arcade
 
 class MyGame(arcade.Window):
     """
@@ -97,6 +66,7 @@ class MyGame(arcade.Window):
         predator = Entity(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite, PREDATOR, self.cur_evolution)
         self.predator_list.append(predator)
         self.predator_engines.append(PhysicsEngineSimple(predator, self.all_sprites))
+        self.all_sprites.append(predator)
 
 
     def setup(self):

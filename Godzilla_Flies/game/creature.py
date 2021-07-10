@@ -20,6 +20,10 @@ class Creature(arcade.Sprite):
         #sself.sprite_list = []
         self.evolution_index = 0
 
+        self._last_change = time()
+        self._auto = False
+        self._update_interval = 5
+
 
     @abstractmethod
     def evolve(self):
@@ -50,7 +54,7 @@ class Creature(arcade.Sprite):
 
     def _wander(self):
         """Randomly wanders the character around. Every time interval the creature switches from moving to pausing"""
-        if time() - self._last_change > 3:
+        if time() - self._last_change > self._update_interval:
             self._last_change = time()
 
             # Continue movement
@@ -59,11 +63,10 @@ class Creature(arcade.Sprite):
                 direction = choice(((0, self.speed), (0, -self.speed), (self.speed, 0), (-self.speed, 0)))
                 self.change_x = direction[0]
                 self.change_y = direction[1]
-                print("MOVED")
+ 
 
             # Stall movement
             else:
-                print("STALL")
                 self.change_x = 0
                 self.change_y = 0
 
@@ -71,16 +74,6 @@ class Creature(arcade.Sprite):
             self.change_x = 0
             self.change_y = 0
             self._auto = False
-
-
-        # # Pause the movement if it was recently running    
-        # else:
-        #     if self.change_y != 0 or self.change_x != 0:
-        #         print("HALT")
-        #         self.change_x = 0
-        #         self.change_y = 0
-        
-        #print(time() - self._last_change)
             
 
 
