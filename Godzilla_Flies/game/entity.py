@@ -33,7 +33,7 @@ class Entity(Creature):
 
         # Player is in range: attack
         if distance < KILL_RANGE:
-            if self.type: #predator
+            if self.type == PREDATOR: #predator
                 self._chase_player()
 
             else: #prey
@@ -98,3 +98,8 @@ class Entity(Creature):
         elif isinstance(prey, Player):
             player.consume()
             prey.remove_from_sprite_lists()
+
+
+    def evolve(self):
+
+        self.type = PREDATOR 
