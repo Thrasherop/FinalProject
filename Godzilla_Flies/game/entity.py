@@ -99,3 +99,8 @@ class Entity(Creature):
         elif isinstance(prey, Player):
             player.consume()
             prey.remove_from_sprite_lists()
+
+
+    def evolve(self):
+
+        self.type = PREDATOR 

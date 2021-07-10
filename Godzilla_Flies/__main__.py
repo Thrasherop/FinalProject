@@ -13,11 +13,11 @@ try:
     from game.arcade_input_service import ArcadeInputService
     from game.arcade_output_service import ArcadeOutputService# program entry point
     """
-
+    from game.predator import Predator
     from game.prey import Prey
     from game.creature import Creature
     from game.player import Player
-    from game.predator import Predator
+    from game.entity import Entity
     from game.score import *
 
 
@@ -39,6 +39,7 @@ except:
     from game.creature import Creature
     from game.player import Player
     from game.predator import Predator
+    from game.entity import Entity
     from game.score import *
 
     import arcade
@@ -78,12 +79,12 @@ class MyGame(arcade.Window):
         self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
 
     def spawn_prey(self):
-        prey = Entity(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite)
+        prey = Entity(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite, PREY)
         self.prey_list.append(prey)
         self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
 
     def spawn_predator(self):
-        predator = Predator(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite)
+        predator = Entity(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite, PREDATOR)
         self.predator_list.append(predator)
         self.predator_engines.append(PhysicsEngineSimple(predator, self.all_sprites))
 
