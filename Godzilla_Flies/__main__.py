@@ -77,6 +77,8 @@ class MyGame(arcade.Window):
 
         # Evolve
         self.evolve_status = 0
+        self.cur_evolution = 0
+
 
     def spawn_player(self):
         self.player_sprite = Player(FLY_IMAGE)
@@ -87,12 +89,12 @@ class MyGame(arcade.Window):
         self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
 
     def spawn_prey(self):
-        prey = Entity(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite, PREY)
+        prey = Entity(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite, PREY, self.cur_evolution)
         self.prey_list.append(prey)
         self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
 
     def spawn_predator(self):
-        predator = Entity(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite, PREDATOR)
+        predator = Entity(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite, PREDATOR, self.cur_evolution)
         self.predator_list.append(predator)
         self.predator_engines.append(PhysicsEngineSimple(predator, self.all_sprites))
 
@@ -281,6 +283,7 @@ class MyGame(arcade.Window):
             thing.evolve()
 
         self.evolve_status = 0
+        self.cur_evolution += 1
 
 def main():
     """ Main method """

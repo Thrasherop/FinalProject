@@ -139,4 +139,18 @@ class Entity(Creature):
 
     def evolve(self):
 
-        self.type = PREDATOR 
+        # self.type = PREDATOR
+
+
+        print("Predator is evolving!")
+
+        self.sprite_index += 1
+
+        self.cur_sprite = self.sprite_list[self.sprite_index]
+
+        self.set_texture(self.sprite_index + 1)
+
+        self.changed = True
+
+
+
