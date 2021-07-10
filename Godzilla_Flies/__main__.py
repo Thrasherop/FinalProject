@@ -78,7 +78,7 @@ class MyGame(arcade.Window):
         self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
 
     def spawn_prey(self):
-        prey = Prey(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite)
+        prey = Entity(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite)
         self.prey_list.append(prey)
         self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
 

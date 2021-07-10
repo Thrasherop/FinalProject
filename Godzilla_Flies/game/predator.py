@@ -15,6 +15,8 @@ class Predator(Creature):
         self.target = player
         self.spawn()
 
+        self._last_change = time()
+
     def spawn(self):
         while True:
             x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
@@ -41,7 +43,8 @@ class Predator(Creature):
         self.boundary_check()
 
     def update(self):
-        self.move()
+        # self.move()
+        pass
 
 
     def interact(self, other):

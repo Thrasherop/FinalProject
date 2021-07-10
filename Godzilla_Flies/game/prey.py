@@ -14,6 +14,8 @@ class Prey(Creature):
         self.target = player
         self.spawn()
 
+        self._last_change = time()
+
     def spawn(self):
         while True:
             x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
@@ -40,7 +42,8 @@ class Prey(Creature):
         self.boundary_check()
 
     def update(self):
-        self.move()
+        # self.move()
+        pass
 
     def interaction(self, player):
 

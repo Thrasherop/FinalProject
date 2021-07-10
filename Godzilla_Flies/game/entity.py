@@ -33,11 +33,12 @@ class Entity(Creature):
 
         # Player is in range: attack
         if distance < KILL_RANGE:
-            if self.type: #predator
+            if self.type == PREDATOR: #predator
                 self._chase_player()
 
             else: #prey
                 self._escape_player()
+
         # Player is out of range: wander
         else:
             self._wander()
