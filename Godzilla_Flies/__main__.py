@@ -18,8 +18,8 @@ try:
     from game.creature import Creature
     from game.player import Player
     from game.predator import Predator
-    from game.score import *
-
+    from game.score import Score
+    from game.timer import Timer
     import arcade
 
 except:
@@ -40,8 +40,8 @@ except:
     from game.creature import Creature
     from game.player import Player
     from game.predator import Predator
-    from game.score import *
-
+    from game.score import Score
+    from game.timer import Timer
     import arcade
 
 class MyGame(arcade.Window):
@@ -107,6 +107,10 @@ class MyGame(arcade.Window):
 
         # Initialize the score class
         self.score = Score()
+        # Initialize the timer class
+        self.timer = Timer()
+        self.timer.set_time(60)
+        self.total_time = 0.0
 
         # Set up the player
         self.spawn_player()
@@ -153,7 +157,16 @@ class MyGame(arcade.Window):
             self.player_list.draw()
             arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
 
+
         self.ui_list.draw()
+
+        # Sprites
+        self.prey_list.draw()
+        self.predator_list.draw()
+        self.player_list.draw()
+        arcade.draw_text(str(f"Score:  {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+        arcade.draw_text(str(f"Seconds: {self.timer.get_time()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+
 
     def on_update(self, delta_time):
         """Movement and game logic"""
@@ -175,7 +188,9 @@ class MyGame(arcade.Window):
         for prey in self.prey_list:
             prey.update()
 
-
+        self.total_time += delta_time
+        second = int(self.total_time) % 60
+        self.timer.lose_time(second)
 
         # See if we hit anything
         self.check_for_collisions()
