@@ -56,11 +56,16 @@ class Entity(Creature):
             self._update_interval = 1.5
 
     def spawn(self):
+        if self.type:  # Predator
+            safe_zone = PREDATOR_SPAWN_DISTANCE
+        else:
+            safe_zone = PREY_SPAWN_DISTANCE
         while True:
             x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
             x_diff = abs(self.center_x - x)
             y_diff = abs(self.center_y - y)
-            if x_diff > PREDATOR_SPAWN_DISTANCE and y_diff > PREDATOR_SPAWN_DISTANCE:
+            diff = math.sqrt(x_diff**2 + y_diff**2)
+            if diff > safe_zone:
                 break
         self.center_x = x
         self.center_y = y
