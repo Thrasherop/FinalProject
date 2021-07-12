@@ -33,4 +33,5 @@ FLY_IMAGE = os.path.join(PATH, '..', 'assets', 'fly.png')
 POOP_IMAGE = os.path.join(PATH, '..', 'assets', 'poop.png')
 SPIDER_IMAGE = os.path.join(PATH, '..', 'assets', 'spider.png')
 DEATH_IMAGE = os.path.join(PATH, '..', 'assets', 'Death.png')
+MANTIS_IMAGE = os.path.join(PATH, '..', 'assets', 'praying_mantis.png')
 LEVEL_1_PREY_IMAGES = []
