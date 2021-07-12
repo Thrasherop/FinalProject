@@ -5,46 +5,17 @@ from arcade.physics_engines import PhysicsEngineSimple
 from time import time
 import arcade
 
-try: 
-    from game.constants import *
-    #from game.point import Point
-    """
-    from game.control_actors_action import ControlActorsAction
-    from game.draw_actors_action import DrawActorsAction
-    from game.handle_collisions_action import HandleCollisionsAction
-    from game.move_actors_action import MoveActorsAction
-    from game.arcade_input_service import ArcadeInputService
-    from game.arcade_output_service import ArcadeOutputService# program entry point
-    """
 
-    from game.prey import Prey
-    from game.creature import Creature
-    from game.player import Player
-    from game.predator import Predator
-    from game.score import Score
-    from game.timer import Timer
-    
+from game.constants import *
+#from game.point import Point
 
-except:
+from game.prey import Prey
+from game.creature import Creature
+from game.player import Player
+from game.predator import Predator
+from game.score import Score
+from game.timer import Timer
 
-
-    from game.constants import *
-    #from game.point import Point
-    """
-    from game.control_actors_action import ControlActorsAction
-    from game.draw_actors_action import DrawActorsAction
-    from game.handle_collisions_action import HandleCollisionsAction
-    from game.move_actors_action import MoveActorsAction
-    from game.arcade_input_service import ArcadeInputService
-    from game.arcade_output_service import ArcadeOutputService# program entry point
-    """
-
-    from game.prey import Prey
-    from game.creature import Creature
-    from game.player import Player
-    from game.predator import Predator
-    from game.score import Score
-    from game.timer import Timer
 
 class MyGame(arcade.Window):
     """
