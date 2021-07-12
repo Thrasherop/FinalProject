@@ -83,7 +83,7 @@ class MyGame(arcade.Window):
 
         # Initialize the timer class
         self.timer = Timer()
-        self.timer.set_time(10)
+        self.timer.set_time(TIMER_TIME)
         self.start_time = time()
         self.total_time = 0
 
