@@ -2,6 +2,9 @@ from random import randint
 
 from arcade.physics_engines import PhysicsEngineSimple
 
+from time import time
+import arcade
+
 try: 
     from game.constants import *
     #from game.point import Point
@@ -20,7 +23,7 @@ try:
     from game.predator import Predator
     from game.score import Score
     from game.timer import Timer
-    import arcade
+    
 
 except:
 
@@ -42,7 +45,6 @@ except:
     from game.predator import Predator
     from game.score import Score
     from game.timer import Timer
-    import arcade
 
 class MyGame(arcade.Window):
     """
@@ -110,7 +112,8 @@ class MyGame(arcade.Window):
         # Initialize the timer class
         self.timer = Timer()
         self.timer.set_time(60)
-        self.total_time = 0.0
+        self.start_time = time()
+        self.total_time = 0
 
         # Set up the player
         self.spawn_player()
@@ -165,7 +168,7 @@ class MyGame(arcade.Window):
         self.predator_list.draw()
         self.player_list.draw()
         arcade.draw_text(str(f"Score:  {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
-        arcade.draw_text(str(f"Seconds: {self.timer.get_time()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+        arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
 
 
     def on_update(self, delta_time):
@@ -188,9 +191,10 @@ class MyGame(arcade.Window):
         for prey in self.prey_list:
             prey.update()
 
-        self.total_time += delta_time
-        second = int(self.total_time) % 60
-        self.timer.lose_time(second)
+        old_total = self.total_time
+        self.total_time = time() - self.start_time
+
+        self.timer.lose_time(self.total_time - old_total)
 
         # See if we hit anything
         self.check_for_collisions()
@@ -291,9 +295,6 @@ class MyGame(arcade.Window):
         self.cur_evolution += 1
 
         pass
-
-
-
 
 
 def main():
