@@ -83,7 +83,7 @@ class MyGame(arcade.Window):
 
         # Initialize the timer class
         self.timer = Timer()
-        self.timer.set_time(60)
+        self.timer.set_time(10)
         self.start_time = time()
         self.total_time = 0
 
@@ -130,20 +130,11 @@ class MyGame(arcade.Window):
             self.prey_list.draw()
             self.predator_list.draw()
             self.player_list.draw()
-            arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12,
+            arcade.draw_text(str(f"Score: {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.STEEL_BLUE, 12,
                              anchor_x="right", anchor_y="top")
-            arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.BLACK, 12, anchor_x = "right", anchor_y = "top")
+            arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
 
         self.ui_list.draw()
-
-        # Sprites
-        self.prey_list.draw()
-        self.predator_list.draw()
-        self.player_list.draw()
-        arcade.draw_text(str(f"Score:  {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25,
-                         arcade.color.BLACK, 12, anchor_x="right", anchor_y="top")
-        # arcade.draw_text(str(f"Seconds: {self.timer.get_time()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40,
-        #                  arcade.color.BLACK, 12, anchor_x="right", anchor_y="top")
 
 
     def on_update(self, delta_time):
@@ -174,6 +165,7 @@ class MyGame(arcade.Window):
 
         # See if we hit anything
         self.check_for_collisions()
+        self.check_time()
 
         if self.evolve_status >= 5:
             self.evolve()
@@ -196,6 +188,10 @@ class MyGame(arcade.Window):
         elif self.player_sprite._get_right() > SCREEN_WIDTH - 1:
             self.player_sprite.change_x = 0
             self.player_sprite._set_right(SCREEN_WIDTH - 1)
+    
+    def check_time(self):
+        if self.timer.get_time() <= 0:
+            self.player_lost()
 
     def check_for_collisions(self):
         prey_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
@@ -268,6 +264,7 @@ class MyGame(arcade.Window):
 
         self.evolve_status = 0
         self.cur_evolution += 1
+        self.timer.set_time(10)
 
 def main():
     """ Main method """
