@@ -1,18 +1,16 @@
 
 from random import randint
-from time import time
 
 from arcade.physics_engines import PhysicsEngineSimple
 
 from game.constants import *
 
-from game.prey import Prey
-from game.creature import Creature
+
+#from game.creature import Creature
 from game.player import Player
-from game.predator import Predator
+
 from game.entity import Entity
-from game.score import Score
-from game.timer import Timer
+from game.score import *
 
 import arcade
 
@@ -81,12 +79,6 @@ class MyGame(arcade.Window):
         # Initialize the score class
         self.score = Score()
 
-        # Initialize the timer class
-        self.timer = Timer()
-        self.timer.set_time(TIMER_TIME)
-        self.start_time = time()
-        self.total_time = 0
-
         # Set up the player
         self.spawn_player()
 
@@ -130,11 +122,19 @@ class MyGame(arcade.Window):
             self.prey_list.draw()
             self.predator_list.draw()
             self.player_list.draw()
-            arcade.draw_text(str(f"Score: {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.STEEL_BLUE, 12,
+            arcade.draw_text(str(self.score.get_score()), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.BLACK, 12,
                              anchor_x="right", anchor_y="top")
-            arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
 
         self.ui_list.draw()
+
+        # Sprites
+        self.prey_list.draw()
+        self.predator_list.draw()
+        self.player_list.draw()
+        arcade.draw_text(str(f"Score:  {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25,
+                         arcade.color.BLACK, 12, anchor_x="right", anchor_y="top")
+        # arcade.draw_text(str(f"Seconds: {self.timer.get_time()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40,
+        #                  arcade.color.BLACK, 12, anchor_x="right", anchor_y="top")
 
 
     def on_update(self, delta_time):
@@ -156,16 +156,10 @@ class MyGame(arcade.Window):
         for prey in self.prey_list:
             prey.update()
 
-        old_total = self.total_time
-        self.total_time = time() - self.start_time
-
-        self.timer.lose_time(self.total_time - old_total)
-
 
 
         # See if we hit anything
         self.check_for_collisions()
-        self.check_time()
 
         if self.evolve_status >= 5:
             self.evolve()
@@ -188,10 +182,6 @@ class MyGame(arcade.Window):
         elif self.player_sprite._get_right() > SCREEN_WIDTH - 1:
             self.player_sprite.change_x = 0
             self.player_sprite._set_right(SCREEN_WIDTH - 1)
-    
-    def check_time(self):
-        if self.timer.get_time() <= 0:
-            self.player_lost()
 
     def check_for_collisions(self):
         prey_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
@@ -264,7 +254,6 @@ class MyGame(arcade.Window):
 
         self.evolve_status = 0
         self.cur_evolution += 1
-        self.timer.set_time(10)
 
 def main():
     """ Main method """

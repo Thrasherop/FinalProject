@@ -1,5 +1,6 @@
 import os
 
+
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 650
 SCREEN_TITLE = "Godzilla Flies"
@@ -24,8 +25,8 @@ DEATH_SCALING = 1
 NUMBER_OF_PRADATORS = 3
 NUMBER_OF_PREY = 5
 
-PREY_SPAWN_DISTANCE = 200
-PREDATOR_SPAWN_DISTANCE = 600
+PREY_SPAWN_DISTANCE = 100
+PREDATOR_SPAWN_DISTANCE = 200
 
 PREDATOR_KILL_RANGE = PREDATOR_SPAWN_DISTANCE * 3 / 8
 PREY_KILL_RANGE = PREY_SPAWN_DISTANCE * 5 / 8
@@ -34,6 +35,11 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 FLY_IMAGE = os.path.join(PATH, '..', 'assets', 'fly.png')
 POOP_IMAGE = os.path.join(PATH, '..', 'assets', 'poop.png')
 SPIDER_IMAGE = os.path.join(PATH, '..', 'assets', 'spider.png')
+BIRD_IMAGE = os.path.join(PATH, '..', 'assets', 'tweety_bird.png')
+CAT_IMAGE = os.path.join(PATH, '..', 'assets', 'cat.png')
+SHARK_IMAGE = os.path.join(PATH, '..', 'assets', 'shark.png')
+BOSS_IMAGE = os.path.join(PATH, '..', 'assets', 'godzilla_fly.png')
+
 DEATH_IMAGE = os.path.join(PATH, '..', 'assets', 'Death.png')
 MANTIS_IMAGE = os.path.join(PATH, '..', 'assets', 'praying_mantis.png')
 DRAGON_FLY_IMAGE = os.path.join(PATH, '..', 'assets', 'dragon_fly.png')
