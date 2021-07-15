@@ -14,6 +14,7 @@ from game.entity import Entity
 from game.score import Score
 from game.timer import Timer
 from game.sound import Sound
+import math
 
 import arcade
 
@@ -141,7 +142,7 @@ class MyGame(arcade.Window):
 
 
             if not self.game_over:
-                arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
+                arcade.draw_text(str(f"Seconds: {math.floor(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
 
             else:
                 arcade.draw_text(str(f" {(self.game_over_message)}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40,
