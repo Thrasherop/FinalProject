@@ -10,8 +10,8 @@ from game.constants import *
 
 class Player(Creature):
     def __init__(self, sprite):
-        self.sprite_list = ['./assets/fly.png', "./assets/spider.png", './assets/tweety_bird.png', './assets/cat.png',
-                             './assets/shark.png', './assets/godzilla_fly.png']
+        self.sprite_list = ['./assets/Sprites/fly.png', "./assets/Sprites/spider.png", './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
+                             './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
 
         self.cur_sprite = self.sprite_list[0]
 
@@ -19,8 +19,9 @@ class Player(Creature):
 
         super().__init__(self.cur_sprite, PLAYER_SCALING, PLAYER_MOVEMENT_SPEED)
 
-        self.sprite_list = ['./assets/fly.png', "./assets/spider.png", './assets/tweety_bird.png', './assets/cat.png',
-                            './assets/shark.png', './assets/godzilla_fly.png']
+        self.sprite_list = ['./assets/Sprites/fly.png', "./assets/Sprites/spider.png",
+                            './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
+                            './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
 
         for item in self.sprite_list:
             self.append_texture(arcade.load_texture(item))
@@ -36,6 +37,8 @@ class Player(Creature):
 
         prey.remove_from_sprite_lists()
         print("Player has consumed")
+
+
 
         pass
 

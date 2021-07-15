@@ -13,6 +13,7 @@ from game.predator import Predator
 from game.entity import Entity
 from game.score import Score
 from game.timer import Timer
+from game.sound import Sound
 
 import arcade
 
@@ -41,6 +42,12 @@ class MyGame(arcade.Window):
         # Other
         self.all_sprites = arcade.SpriteList(use_spatial_hash=True)
         self.level = 0
+        self.is_godzilla = False
+        self.game_over = False
+        self.game_over_message = ""
+        self.sound_player = Sound()
+
+
 
         # UI
         self.ui_list = arcade.SpriteList()
@@ -49,6 +56,7 @@ class MyGame(arcade.Window):
         # Evolve
         self.evolve_status = 0
         self.cur_evolution = 0
+
 
 
     def spawn_player(self):
@@ -60,16 +68,15 @@ class MyGame(arcade.Window):
         self.physics_engine = PhysicsEngineSimple(self.player_sprite, self.all_sprites)
 
     def spawn_prey(self):
-        prey = Entity(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite, PREY, self.cur_evolution)
+        prey = Entity(POOP_IMAGE, PREY_SCALING, 1, self.player_sprite, PREY, self.cur_evolution, self.is_godzilla)
         self.prey_list.append(prey)
         self.prey_engines.append(PhysicsEngineSimple(prey, self.all_sprites))
 
     def spawn_predator(self):
-        predator = Entity(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite, PREDATOR, self.cur_evolution)
+        predator = Entity(SPIDER_IMAGE, PREDATOR_SCALING, 1, self.player_sprite, PREDATOR, self.cur_evolution, self.is_godzilla)
         self.predator_list.append(predator)
         self.predator_engines.append(PhysicsEngineSimple(predator, self.all_sprites))
         self.all_sprites.append(predator)
-
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game. """
@@ -100,7 +107,6 @@ class MyGame(arcade.Window):
         # Set up the predator
         for i in range(NUMBER_OF_PRADATORS):
             self.spawn_predator()
-            
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed."""
@@ -132,10 +138,16 @@ class MyGame(arcade.Window):
             self.player_list.draw()
             arcade.draw_text(str(f"Score: {self.score.get_score()}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 25, arcade.color.STEEL_BLUE, 12,
                              anchor_x="right", anchor_y="top")
-            arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
+
+
+            if not self.game_over:
+                arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
+
+            else:
+                arcade.draw_text(str(f" {(self.game_over_message)}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40,
+                                 arcade.color.STEEL_BLUE, 12, anchor_x="right", anchor_y="top")
 
         self.ui_list.draw()
-
 
     def on_update(self, delta_time):
         """Movement and game logic"""
@@ -190,7 +202,7 @@ class MyGame(arcade.Window):
             self.player_sprite._set_right(SCREEN_WIDTH - 1)
     
     def check_time(self):
-        if self.timer.get_time() <= 0:
+        if self.timer.get_time() <= 0 and not self.is_godzilla:
             self.player_lost()
 
     def check_for_collisions(self):
@@ -205,6 +217,11 @@ class MyGame(arcade.Window):
 
         # Loop through each coin we hit (if any) and remove it
         for prey in prey_hit_list:
+
+            # Plays consume and death sound
+            self.sound_player.consume(self.cur_evolution)
+            self.sound_player.death(self.cur_evolution - 1)
+
             # Remove the coin
             # prey.remove_from_sprite_lists()
             self.player_sprite.consume(prey)
@@ -225,10 +242,14 @@ class MyGame(arcade.Window):
     def player_lost(self):
         # TODO Finish this
         self.player_sprite.remove_from_sprite_lists()
-        self.score = Score()
+        #self.score = Score()
         # self.spawn_player() Don't respawn player
 
         print(self.is_over)
+
+        # Plays death sound
+        self.sound_player.death(self.cur_evolution)
+        self.sound_player.consume(self.cur_evolution + 1)
 
         if not self.is_over:
             loss_sprite = arcade.Sprite(DEATH_IMAGE, DEATH_SCALING)
@@ -247,24 +268,72 @@ class MyGame(arcade.Window):
 
         print("Player has perished")
 
+        self.game_over = True
+        self.game_over_message = "You lost!"
+
+        pass
+
+    def player_win(self):
+
+        self.game_over = True
+        self.game_over_message = f"You won with a score of {self.score.get_score()}"
+
         pass
 
     def evolve(self):
 
+        print("cur_evolution", self.cur_evolution)
+
         print("__main__ evolving!!")
 
-        for thing in self.predator_list:
-            thing.evolve()
+        if self.cur_evolution < 4:
 
-        for thing in self.prey_list:
-            thing.evolve()
+            for thing in self.predator_list:
+                thing.evolve()
 
-        for thing in self.player_list:
-            thing.evolve()
+
+
+            for thing in self.prey_list:
+                thing.evolve()
+
+            for thing in self.player_list:
+                thing.evolve()
+
+            self.cur_evolution += 1
+            self.timer.set_time(10)
+
+        elif self.cur_evolution == 4:
+
+            if not self.is_godzilla:
+
+                for thing in self.predator_list:
+                    thing.remove()
+                    self.spawn_prey()
+
+                for thing in self.predator_list:
+                    thing.remove()
+                    self.spawn_prey()
+
+                for thing in self.prey_list:
+                    thing.randomize_sprite()
+
+                for thing in self.player_list:
+                    thing.evolve()
+
+                self.timer.set_time(10)
+
+                self.is_godzilla = True
+
+            elif self.is_godzilla and self.timer.get_time() < 0:
+
+                self.player_win()
+
+
+
+
 
         self.evolve_status = 0
-        self.cur_evolution += 1
-        self.timer.set_time(10)
+
 
 def main():
     """ Main method """

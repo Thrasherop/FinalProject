@@ -6,18 +6,19 @@ from game.player import Player
 import math
 from time import time
 import arcade
+import random
 
 
 
 class Entity(Creature):
-    def __init__(self, sprite, scaling, point_value, player, type, cur_evolution = 0):
+    def __init__(self, sprite, scaling, point_value, player, type, cur_evolution = 0, randomize_sprite = False):
 
         self.type = type
 
 
         if self.type == PREDATOR:
-            self.sprite_list = ["./assets/spider.png", './assets/tweety_bird.png', './assets/cat.png',
-                                './assets/shark.png', './assets/godzilla_fly.png']
+            self.sprite_list = ["./assets/Sprites/spider.png", './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
+                                './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
 
             self.cur_sprite = self.sprite_list[0]
 
@@ -35,9 +36,9 @@ class Entity(Creature):
             self._update_interval = 3
 
         else:
-            self.sprite_list = ['./assets/poop.png', './assets/fly.png', "./assets/spider.png",
-                                './assets/tweety_bird.png', './assets/cat.png',
-                                './assets/shark.png', './assets/godzilla_fly.png']
+            self.sprite_list = ['./assets/Sprites/poop.png', './assets/Sprites/fly.png', "./assets/Sprites/spider.png",
+                                './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
+                                './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
 
 
 
@@ -54,6 +55,9 @@ class Entity(Creature):
             self.sprite_index = cur_evolution
 
             self._update_interval = 1.5
+
+        if randomize_sprite:
+            self.randomize_sprite()
 
     def spawn(self):
         if self.type:  # Predator
@@ -165,5 +169,31 @@ class Entity(Creature):
 
         self.changed = True
 
+    def devolve(self):
+        print("Devolving")
 
+        self.sprite_index -= 1
+        self.cur_sprite = self.sprite_index[self.sprite_list]
 
+        self.set_texture(self.sprite_index + 1)
+
+        self.changed = True
+
+    def remove(self):
+
+        self.remove_from_sprite_lists()
+
+    def randomize_sprite(self):
+
+        print("Randomizing a sprite")
+        #new_sprite = random.choice[self.sprite_list]
+
+        self.sprite_index = random.randint(1, len(self.sprite_list)) - 1
+
+        print(self.sprite_index)
+
+        self.cur_sprite = self.sprite_list[self.sprite_index]
+
+        self.set_texture(self.sprite_index + 1)
+
+        self.changed = True

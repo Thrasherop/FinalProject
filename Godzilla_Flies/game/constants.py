@@ -14,7 +14,7 @@ ENEMY_MOVEMENT_SPEED = 2
 PREDATOR = 1
 PREY = 0
 
-TIMER_TIME = 15
+TIMER_TIME = 10
 
 PREDATOR_SCALING = .4
 PLAYER_SCALING = .3
@@ -38,3 +38,25 @@ DEATH_IMAGE = os.path.join(PATH, '..', 'assets', 'Death.png')
 MANTIS_IMAGE = os.path.join(PATH, '..', 'assets', 'praying_mantis.png')
 DRAGON_FLY_IMAGE = os.path.join(PATH, '..', 'assets', 'dragon_fly.png')
 LEVEL_1_PREY_IMAGES = []
+
+
+# Sets the sound paths
+
+SOUND_VOLUME = .8
+CONSUME_DELAY = 2
+
+FLY_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'FLY_SOUND_EAT.m4a')
+FLY_SOUND_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'FLY_SOUND_DEATH.m4a')
+SPIDER_SOUND_EAT = None
+SPIDER_SOUND_DEATH = None
+BIRD_SOUND_EAT = None
+BIRD_SOUND_DEATH = None
+CAT_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'CAT_SOUND_EAT.m4a')
+CAT_SOUND_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'catDeath.m4a')
+SHARK_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'sharkEat.m4a')
+SHARK_SOUND_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'sharkDeath.m4a')
+GODZILLA_EAT = None
+GODZILLA_DEATH = None
+POOP_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'POOP_DEATH.m4a')
+
+FOO_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'fooRecording.m4a')
