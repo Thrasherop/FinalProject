@@ -274,7 +274,10 @@ class MyGame(arcade.Window):
         pass
 
     def player_win(self):
-
+        
+        win_sprite = arcade.Sprite(VICTORY_IMAGE, VICTORY_SCALING)
+        win_sprite.center_x = SCREEN_WIDTH / 2
+        win_sprite.center_y = SCREEN_HEIGHT / 2
         self.game_over = True
         self.game_over_message = f"You won with a score of {self.score.get_score()}"
 
