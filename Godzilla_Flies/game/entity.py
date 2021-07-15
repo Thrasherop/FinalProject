@@ -17,8 +17,8 @@ class Entity(Creature):
 
 
         if self.type == PREDATOR:
-            self.sprite_list = ["./assets/Sprites/spider.png", './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
-                                './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
+            self.sprite_list = [SPIDER_IMAGE, BIRD_IMAGE, CAT_IMAGE,
+                                SHARK_IMAGE, GODZILLA_IMAGE]
 
             self.cur_sprite = self.sprite_list[0]
 
@@ -36,9 +36,9 @@ class Entity(Creature):
             self._update_interval = 3
 
         else:
-            self.sprite_list = ['./assets/Sprites/poop.png', './assets/Sprites/fly.png', "./assets/Sprites/spider.png",
-                                './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
-                                './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
+            self.sprite_list = [POOP_IMAGE, FLY_IMAGE, SPIDER_IMAGE,
+                                BIRD_IMAGE, CAT_IMAGE,
+                                SHARK_IMAGE, GODZILLA_IMAGE]
 
 
 

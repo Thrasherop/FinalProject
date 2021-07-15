@@ -307,7 +307,6 @@ class MyGame(arcade.Window):
             self.timer.set_time(TIMER_TIME)
 
         elif self.cur_evolution == 4:
-
             if not self.is_godzilla:
 
                 for thing in self.predator_list:
