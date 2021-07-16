@@ -14,6 +14,8 @@ You will also need the `threading` module.
 
 Finally, just run the `__main__.py` file.
 
+For easy demoing, you can set the value of ENEMY_MOVEMENT_SPEED to 0 in constants.
+
 ## Project Structure
 ---
 The project files and folders are organized as follows:
