@@ -29,8 +29,9 @@ class MyGame(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
         # Pick background color
-        arcade.set_background_color((200, 200, 200))
+        arcade.set_background_color(SAFE_BACKGROUND)
         
+        self.is_win = False
         # Prey
         self.prey_list = None
         self.prey_engines = []
@@ -205,6 +206,12 @@ class MyGame(arcade.Window):
     def check_time(self):
         if self.timer.get_time() <= 0 and not self.is_godzilla:
             self.player_lost()
+        if self.timer.get_time() < 3:
+            arcade.set_background_color(DANGER_BACKGROUND)
+        elif self.timer.get_time() < 5:
+            arcade.set_background_color(CAUTION_BACKGROUND)
+        else:
+            arcade.set_background_color(SAFE_BACKGROUND)
 
     def check_for_collisions(self):
         prey_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
@@ -249,6 +256,7 @@ class MyGame(arcade.Window):
         print(self.is_over)
 
         # Plays death sound
+        # if not self.game_over:
         self.sound_player.death(self.cur_evolution)
         self.sound_player.consume(self.cur_evolution + 1)
 
