@@ -10,8 +10,9 @@ from game.constants import *
 
 class Player(Creature):
     def __init__(self, sprite):
-        self.sprite_list = ['./assets/Sprites/fly.png', "./assets/Sprites/spider.png", './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
-                             './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
+        self.sprite_list = [FLY_IMAGE, SPIDER_IMAGE,
+                            BIRD_IMAGE, CAT_IMAGE,
+                            SHARK_IMAGE, GODZILLA_IMAGE]
 
         self.cur_sprite = self.sprite_list[0]
 
@@ -19,9 +20,9 @@ class Player(Creature):
 
         super().__init__(self.cur_sprite, PLAYER_SCALING, PLAYER_MOVEMENT_SPEED)
 
-        self.sprite_list = ['./assets/Sprites/fly.png', "./assets/Sprites/spider.png",
-                            './assets/Sprites/tweety_bird.png', './assets/Sprites/cat.png',
-                            './assets/Sprites/shark.png', './assets/Sprites/godzilla_fly.png']
+        self.sprite_list = [FLY_IMAGE, SPIDER_IMAGE,
+                            BIRD_IMAGE, CAT_IMAGE,
+                            SHARK_IMAGE, GODZILLA_IMAGE]
 
         for item in self.sprite_list:
             self.append_texture(arcade.load_texture(item))
