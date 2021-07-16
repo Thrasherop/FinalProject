@@ -10,6 +10,8 @@ Continue consuming to continue evolving, but make sure to watch the time limit!
 Make sure you have Python 3 set up. Then, install the arcade module using:
     `pip3 install arcade`
 
+You will also need the `threading` module. This is in the python3 standard library.
+
 
 ## Project Structure
 ---
