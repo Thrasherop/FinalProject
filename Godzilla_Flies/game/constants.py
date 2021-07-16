@@ -32,8 +32,8 @@ NUMBER_OF_PREY = 5
 PREY_SPAWN_DISTANCE = 100
 PREDATOR_SPAWN_DISTANCE = 200
 
-PREDATOR_KILL_RANGE = PREDATOR_SPAWN_DISTANCE * 3 / 8
-PREY_KILL_RANGE = PREY_SPAWN_DISTANCE * 5 / 8
+PREDATOR_KILL_RANGE = PREDATOR_SPAWN_DISTANCE * 2
+PREY_KILL_RANGE = PREY_SPAWN_DISTANCE * 2
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 FLY_IMAGE = os.path.join(PATH, '..', 'assets', 'Sprites', 'fly.png')
@@ -70,4 +70,5 @@ GODZILLA_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'godzilla_eating.m4a'
 GODZILLA_WIN = os.path.join(PATH, '..', 'assets', 'Audio', 'godzilla_win.m4a')
 POOP_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'POOP_DEATH.m4a')
 
+VICTORY_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'Victory.m4a')
 FOO_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'fooRecording.m4a')
