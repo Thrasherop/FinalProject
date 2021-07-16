@@ -20,7 +20,7 @@ class Sound:
                                 SHARK_SOUND_EAT,
                                 SHARK_SOUND_DEATH,
                                 GODZILLA_EAT,
-                                GODZILLA_WIN]
+                                GODZILLA_WIN] # This will be merged with Victory
 
         self.sound_list = []
 
@@ -75,3 +75,8 @@ class Sound:
         arcade.play_sound(index, SOUND_VOLUME)
 
         pass
+
+    def play_win(self):
+
+        sound = arcade.load_sound(VICTORY_SOUND)
+        arcade.play_sound(sound, SOUND_VOLUME)
