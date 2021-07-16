@@ -258,7 +258,7 @@ class MyGame(arcade.Window):
             self.player_sprite.consume(prey)
             self.spawn_prey()
             self.score.add_score(prey.get_points())
-            print(self.score.get_score())
+            # print(self.score.get_score())
 
             self.evolve_status += 1
 
@@ -288,7 +288,7 @@ class MyGame(arcade.Window):
             self.ui_list.append(loss_sprite)
             self.is_over = True
 
-            print("inside")
+            # print("inside")
 
         for predator in self.predator_list:
             predator.target = self.player_sprite
@@ -322,9 +322,9 @@ class MyGame(arcade.Window):
 
     def evolve(self):
 
-        print("cur_evolution", self.cur_evolution)
+        # ("cur_evolution", self.cur_evolution)
 
-        print("__main__ evolving!!")
+        # print("__main__ evolving!!")
 
         if self.cur_evolution < 4:
 

@@ -159,7 +159,7 @@ class Entity(Creature):
         # self.type = PREDATOR
 
 
-        print("Predator is evolving!")
+        # ("Predator is evolving!")
 
         self.sprite_index += 1
 
@@ -170,7 +170,7 @@ class Entity(Creature):
         self.changed = True
 
     def devolve(self):
-        print("Devolving")
+        # print("Devolving")
 
         self.sprite_index -= 1
         self.cur_sprite = self.sprite_index[self.sprite_list]
@@ -185,12 +185,12 @@ class Entity(Creature):
 
     def randomize_sprite(self):
 
-        print("Randomizing a sprite")
+        # print("Randomizing a sprite")
         #new_sprite = random.choice[self.sprite_list]
 
         self.sprite_index = random.randint(1, len(self.sprite_list)) - 1
 
-        print(self.sprite_index)
+        # print(self.sprite_index)
 
         self.cur_sprite = self.sprite_list[self.sprite_index]
 

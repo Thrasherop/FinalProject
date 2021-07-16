@@ -51,7 +51,7 @@ class Sound:
 
         else:
             death_num = evolution * 2 + 1
-            print(f"DeathNum: {death_num}")
+            # print(f"DeathNum: {death_num}")
 
             self._playsound(self.sound_list[death_num])
 
@@ -60,7 +60,7 @@ class Sound:
 
     def consume(self, evolution):
 
-        print(f"Consume evolution num: {evolution}")
+        # print(f"Consume evolution num: {evolution}")
 
 
         self.cur_evolution_index = evolution
@@ -74,7 +74,7 @@ class Sound:
 
         death_num = self.cur_evolution_index * 2
 
-        print(f"consume num: {death_num}")
+        # print(f"consume num: {death_num}")
 
         self._playsound(self.sound_list[death_num])
 

@@ -36,7 +36,7 @@ class Player(Creature):
     def consume(self, prey):
 
         prey.remove_from_sprite_lists()
-        print("Player has consumed")
+        # print("Player has consumed")
 
 
 
@@ -47,7 +47,7 @@ class Player(Creature):
         return self.center_x, self.center_y
 
     def evolve(self):
-        print("Player is evolving!")
+        # print("Player is evolving!")
 
         self.sprite_index += 1
 
