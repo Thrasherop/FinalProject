@@ -3,6 +3,10 @@ import os
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 650
 SCREEN_TITLE = "Godzilla Flies"
+CAUTION_BACKGROUND = (181, 93, 69)
+SAFE_BACKGROUND = (200, 200, 200)
+DANGER_BACKGROUND = (189, 32, 32)
+
 
 MARGIN = 65
 
@@ -25,11 +29,11 @@ VICTORY_SCALING = 1
 NUMBER_OF_PRADATORS = 3
 NUMBER_OF_PREY = 5
 
-PREY_SPAWN_DISTANCE = 200
-PREDATOR_SPAWN_DISTANCE = 600
+PREY_SPAWN_DISTANCE = 100
+PREDATOR_SPAWN_DISTANCE = 200
 
-PREDATOR_KILL_RANGE = PREDATOR_SPAWN_DISTANCE * 3 / 8
-PREY_KILL_RANGE = PREY_SPAWN_DISTANCE * 5 / 8
+PREDATOR_KILL_RANGE = PREDATOR_SPAWN_DISTANCE * 2
+PREY_KILL_RANGE = PREY_SPAWN_DISTANCE * 2
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 FLY_IMAGE = os.path.join(PATH, '..', 'assets', 'Sprites', 'fly.png')
@@ -54,10 +58,10 @@ CONSUME_DELAY = 2
 
 FLY_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'FLY_SOUND_EAT.m4a')
 FLY_SOUND_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'FLY_SOUND_DEATH.m4a')
-SPIDER_SOUND_EAT = None
-SPIDER_SOUND_DEATH = None
+SPIDER_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'spider_eat.mp3')
+SPIDER_SOUND_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'spider_death.mp3')
 BIRD_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'bird_eating.m4a')
-BIRD_SOUND_DEATH = None
+BIRD_SOUND_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'bird_death.mp3')
 CAT_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'CAT_SOUND_EAT.m4a')
 CAT_SOUND_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'catDeath.m4a')
 SHARK_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'sharkEat.m4a')
@@ -66,4 +70,5 @@ GODZILLA_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'godzilla_eating.m4a'
 GODZILLA_WIN = os.path.join(PATH, '..', 'assets', 'Audio', 'godzilla_win.m4a')
 POOP_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'POOP_DEATH.m4a')
 
+VICTORY_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'Victory.m4a')
 FOO_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'fooRecording.m4a')

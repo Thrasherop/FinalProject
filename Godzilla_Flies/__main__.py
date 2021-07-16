@@ -29,8 +29,9 @@ class MyGame(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
         # Pick background color
-        arcade.set_background_color((200, 200, 200))
+        arcade.set_background_color(SAFE_BACKGROUND)
         
+        self.is_win = False
         # Prey
         self.prey_list = None
         self.prey_engines = []
@@ -47,6 +48,7 @@ class MyGame(arcade.Window):
         self.game_over = False
         self.game_over_message = ""
         self.sound_player = Sound()
+        self.win_sound_played = False
 
 
 
@@ -150,6 +152,10 @@ class MyGame(arcade.Window):
 
         self.ui_list.draw()
 
+        if self.is_win:
+            self.game_over_message = f"Your score was {self.score.get_score()}"
+            arcade.draw_text(str(self.game_over_message), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 200, arcade.color.STEEL_BLUE, 35, anchor_x="right", anchor_y="top")
+
     def on_update(self, delta_time):
         """Movement and game logic"""
 
@@ -173,7 +179,19 @@ class MyGame(arcade.Window):
         self.total_time = time() - self.start_time
 
         self.timer.lose_time(self.total_time - old_total)
-
+        
+        if self.is_godzilla and self.timer.get_time() < 0:
+                # Remove all entities and display win image
+                try:
+                    while len(self.predator_list) > 0:
+                        del self.predator_list[0]
+                    while len(self.prey_list) > 0:
+                        del self.prey_list[0]
+                    self.player_sprite.remove_from_sprite_lists()
+                    
+                    self.player_win()
+                except:
+                    self.player_win()
 
 
         # See if we hit anything
@@ -205,6 +223,12 @@ class MyGame(arcade.Window):
     def check_time(self):
         if self.timer.get_time() <= 0 and not self.is_godzilla:
             self.player_lost()
+        if self.timer.get_time() < 3:
+            arcade.set_background_color(DANGER_BACKGROUND)
+        elif self.timer.get_time() < 5:
+            arcade.set_background_color(CAUTION_BACKGROUND)
+        else:
+            arcade.set_background_color(SAFE_BACKGROUND)
 
     def check_for_collisions(self):
         prey_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
@@ -246,11 +270,10 @@ class MyGame(arcade.Window):
         #self.score = Score()
         # self.spawn_player() Don't respawn player
 
-        print(self.is_over)
-
         # Plays death sound
-        self.sound_player.death(self.cur_evolution)
-        self.sound_player.consume(self.cur_evolution + 1)
+        if not self.game_over:
+            self.sound_player.death(self.cur_evolution)
+            self.sound_player.consume(self.cur_evolution + 1)
 
         if not self.is_over:
             loss_sprite = arcade.Sprite(DEATH_IMAGE, DEATH_SCALING)
@@ -267,14 +290,13 @@ class MyGame(arcade.Window):
         for prey in self.prey_list:
             prey.target = self.player_sprite
 
-        print("Player has perished")
-
         self.game_over = True
         self.game_over_message = "You lost!"
 
         pass
 
     def player_win(self):
+        self.is_win = True
         
         win_sprite = arcade.Sprite(VICTORY_IMAGE, VICTORY_SCALING)
         win_sprite.center_x = SCREEN_WIDTH / 2
@@ -282,7 +304,15 @@ class MyGame(arcade.Window):
         self.game_over = True
         self.game_over_message = f"You won with a score of {self.score.get_score()}"
 
-        pass
+        self.ui_list.append(win_sprite)
+
+        # Plays win sound if needed
+        if not self.win_sound_played:
+            sound = arcade.load_sound(VICTORY_SOUND)
+            arcade.play_sound(sound, SOUND_VOLUME)
+            self.win_sound_played = True
+
+        
 
     def evolve(self):
 
@@ -326,14 +356,6 @@ class MyGame(arcade.Window):
                 self.timer.set_time(TIMER_TIME)
 
                 self.is_godzilla = True
-
-            elif self.is_godzilla and self.timer.get_time() < 0:
-
-                self.player_win()
-
-
-
-
 
         self.evolve_status = 0
 

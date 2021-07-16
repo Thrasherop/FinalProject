@@ -66,8 +66,8 @@ class Entity(Creature):
             safe_zone = PREY_SPAWN_DISTANCE
         while True:
             x, y = randint(0, SCREEN_WIDTH), randint(0, SCREEN_HEIGHT)
-            x_diff = abs(self.center_x - x)
-            y_diff = abs(self.center_y - y)
+            x_diff = abs(self.target.center_x - x)
+            y_diff = abs(self.target.center_y - y)
             diff = math.sqrt(x_diff**2 + y_diff**2)
             if diff > safe_zone:
                 break
