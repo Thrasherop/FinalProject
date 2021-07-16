@@ -152,6 +152,12 @@ class MyGame(arcade.Window):
 
         self.ui_list.draw()
 
+
+        # Shows final challenge message
+        if self.is_godzilla and not self.is_win:
+            arcade.draw_text(str(f"QUICK! EAT AS MUCH AS YOU CAN!!"), SCREEN_WIDTH-180, SCREEN_HEIGHT - 100, arcade.color.STEEL_BLUE, 35, anchor_x="right", anchor_y="top")
+
+        # Shows score if win screen is displayed
         if self.is_win:
             self.game_over_message = f"Your score was {self.score.get_score()}"
             arcade.draw_text(str(self.game_over_message), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 200, arcade.color.STEEL_BLUE, 35, anchor_x="right", anchor_y="top")
@@ -356,6 +362,7 @@ class MyGame(arcade.Window):
                 self.timer.set_time(TIMER_TIME)
 
                 self.is_godzilla = True
+                self.cur_evolution += 1
 
         self.evolve_status = 0
 

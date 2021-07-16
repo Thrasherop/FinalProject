@@ -53,7 +53,7 @@ LEVEL_1_PREY_IMAGES = []
 
 # Sets the sound paths
 
-SOUND_VOLUME = .8
+SOUND_VOLUME = .5
 CONSUME_DELAY = 2
 
 FLY_SOUND_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'FLY_SOUND_EAT.m4a')
@@ -70,5 +70,5 @@ GODZILLA_EAT = os.path.join(PATH, '..', 'assets', 'Audio', 'godzilla_eating.m4a'
 GODZILLA_WIN = os.path.join(PATH, '..', 'assets', 'Audio', 'godzilla_win.m4a')
 POOP_DEATH = os.path.join(PATH, '..', 'assets', 'Audio', 'POOP_DEATH.m4a')
 
-VICTORY_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'Victory.m4a')
+VICTORY_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'Victory.mp3')
 FOO_SOUND = os.path.join(PATH, '..', 'assets', 'Audio', 'fooRecording.m4a')

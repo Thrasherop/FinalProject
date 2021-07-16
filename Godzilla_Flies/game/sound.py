@@ -26,6 +26,8 @@ class Sound:
 
         self.poop_death = arcade.load_sound(POOP_DEATH)
 
+        self._godzilla_consume_sound = arcade.load_sound(GODZILLA_EAT)
+
         for x in self.path_sound_list:
 
             if x is not None:
@@ -44,6 +46,9 @@ class Sound:
         if evolution == -1:
             self._playsound(self.poop_death)
 
+        # elif evolution == 7:
+        #     self._playgodzilla_consume()
+
         else:
             death_num = evolution * 2 + 1
             print(f"DeathNum: {death_num}")
@@ -51,13 +56,17 @@ class Sound:
             self._playsound(self.sound_list[death_num])
 
 
+
+
     def consume(self, evolution):
+
+        print(f"Consume evolution num: {evolution}")
+
 
         self.cur_evolution_index = evolution
 
         thread = threading.Thread(target=self._consume_threading_target)
         thread.start()
-
 
     def _consume_threading_target(self):
 
@@ -68,6 +77,12 @@ class Sound:
         print(f"consume num: {death_num}")
 
         self._playsound(self.sound_list[death_num])
+
+
+    def _playgodzilla_consume(self):
+
+        arcade.play_sound(self._godzilla_consume_sound, SOUND_VOLUME)
+
 
 
     def _playsound(self, index):

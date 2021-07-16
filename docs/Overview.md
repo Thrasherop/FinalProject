@@ -1,8 +1,8 @@
 
 ## Overview
 
-You begin life as a lonely fly, trying to avoid being eaten by predators. However, once you eat
-some food, YOU become the predator. Your previous enemies will begin fleeing from your presence.
+You begin life as a lonely fly, trying to avoid being eaten by predators. Once you evolve, you 
+will become the past predator. Your prey will change, but so will your predators!
 Continue consuming to continue evolving, but make sure to watch the time limit!
 
 
