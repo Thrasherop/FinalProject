@@ -14,6 +14,7 @@ from game.entity import Entity
 from game.score import Score
 from game.timer import Timer
 from game.sound import Sound
+import math
 
 import arcade
 
@@ -141,7 +142,7 @@ class MyGame(arcade.Window):
 
 
             if not self.game_over:
-                arcade.draw_text(str(f"Seconds: {int(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
+                arcade.draw_text(str(f"Seconds: {math.floor(self.timer.get_time())}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40, arcade.color.STEEL_BLUE, 12, anchor_x = "right", anchor_y = "top")
 
             else:
                 arcade.draw_text(str(f" {(self.game_over_message)}"), SCREEN_WIDTH - 25, SCREEN_HEIGHT - 40,
@@ -274,7 +275,10 @@ class MyGame(arcade.Window):
         pass
 
     def player_win(self):
-
+        
+        win_sprite = arcade.Sprite(VICTORY_IMAGE, VICTORY_SCALING)
+        win_sprite.center_x = SCREEN_WIDTH / 2
+        win_sprite.center_y = SCREEN_HEIGHT / 2
         self.game_over = True
         self.game_over_message = f"You won with a score of {self.score.get_score()}"
 
@@ -300,10 +304,9 @@ class MyGame(arcade.Window):
                 thing.evolve()
 
             self.cur_evolution += 1
-            self.timer.set_time(10)
+            self.timer.set_time(TIMER_TIME)
 
         elif self.cur_evolution == 4:
-
             if not self.is_godzilla:
 
                 for thing in self.predator_list:
@@ -320,7 +323,7 @@ class MyGame(arcade.Window):
                 for thing in self.player_list:
                     thing.evolve()
 
-                self.timer.set_time(10)
+                self.timer.set_time(TIMER_TIME)
 
                 self.is_godzilla = True
 

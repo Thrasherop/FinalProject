@@ -20,7 +20,7 @@ class Sound:
                                 SHARK_SOUND_EAT,
                                 SHARK_SOUND_DEATH,
                                 GODZILLA_EAT,
-                                GODZILLA_DEATH]
+                                GODZILLA_WIN]
 
         self.sound_list = []
 
